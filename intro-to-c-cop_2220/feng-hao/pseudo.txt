@@ -1,0 +1,104 @@
+int task1(int* a, int n, int* b, int m) // returns inner product
+a - pointer to vector, n dimensions,
+b - pointer to another vector, m dimensions
+//don't consider case where n!=m. In that case, wrong.
+//dot product = a1b1 + a2b2 + ... + anbn
+
+
+void task2(int** A, int n1, int m1, int** B, int n2, int m2, int** C, int n3, int m3)
+A - 2d array with dimension n1xm1,
+B - 2d array with dimension n2xm2
+//consider n/m1!=n/m2. defined only if the number of columns in A is equal to the number of rows in B,
+return Matrix C
+//matrix multiplication (AB)ij= sum(to m, from k = 1, Aik,Bkj)
+
+int main
+two vectors (1D) matricies
+two matricies (2D) arrays
+cout the results
+
+
+//dot product
+it seems:
+for every single item in a row, multiply that BY every single item in a column, and store that
+so, if A = {a,b,c}, and B = {d, e, f}
+A.B = {ad + be + cf}
+for each element e in A
+for each element n in B
+sum += A[n]*B[n]
+return sum
+
+
+//multiplication
+A has i rows, j columns.
+B has i2 rows, j2 columns.
+j === i2
+
+A is an i*j matrix
+B is an n*m matrix
+if j==n, declare new array C as an i*m matrix.
+for every row i in C
+for every column m in C
+C[i, m] = A[i].B[m]
+
+C there therefore
+
+C has NxA
+D has AxM
+E will have NxM
+
+ex) 2*3 * 3*2 == 2*2
+ex) 1*2 * 3*2 == CANT DO
+
+
+ex)
+
+A =
+[a00, a01, a02]
+[a10, a11, a12]
+
+B =
+[b00, b01]
+[b10, b11]
+[b20, b21]
+
+AB =
+[ai0.bj0, ai0.bj1]
+[ai1.bj0, ai1.bj1]
+
+
+a = 2x4
+3 4 5 6
+1 2 3 4
+
+b = 4x3
+3 4 5
+6 7 8
+9 8 0
+1 2 1
+
+2x3
+ai0.bj0 ai0.bj1 ai0.bj2
+ai1.bj0 ai1.bj1 ai1.bj2
+
+
+
+MATRIX:
+A              B                 C
+| 01 02 03 |   | 01 02 03 04 |   | a b c d |
+| 04 05 06 | X | 05 06 07 08 | = | e f g h |
+               | 09 10 11 12 |
+
+a = (1*1) + (2*5) + (3*9)
+b = (1*2) + (2*6) + (3*10)
+
+e = (4*1) + (5*5) + (6*9)
+f = (4*2) + (5*6) + (6*10)
+
+for each element x in matrix C, row i, column j
+	element x = A row i . B column j
+
+
+so:
+
+f0r

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hangman.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main (2).c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pointer_example.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pointers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="prog4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="recursion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="woodworth.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amazon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="anything.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="array.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="array2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="smallProg5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="smallprog4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2017s-main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\GDrive\dev\workspace\cli\C\IntroC-2\IntroC\main (1).c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main (1).c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main(2).c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lab3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2017s-control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2017s-loops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2017s-midterm_review.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="question4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="question5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="question6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="question7.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="question1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="question2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="question3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="noujumian.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="smallprog4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lab9.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="checkedycheck.txt" />
+    <Text Include="hangman.txt" />
+    <Text Include="check.txt" />
+    <Text Include="doubleOutput.txt" />
+    <Text Include="doubleInput.txt" />
+    <Text Include="program2_algorithm.txt" />
+    <Text Include="program2Steps.txt" />
+    <Text Include="program1Outline-1.txt" />
+    <Text Include="lettersin.txt.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
+</Project>

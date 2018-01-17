@@ -1,0 +1,37 @@
+1. Declare the following variables:
+	users_choice
+	repeat_yes_or_no
+	account_type
+	checking_account
+	savings_account
+	credit_account
+	money
+
+2. DisplayBalance of checking_account, savings_account, and credit_account
+
+3. RunChoices, save choice into users_choice
+(1) for DEPOSIT
+(2) for WITHDRAWAL
+(3) to make a TRANSFER
+
+3a. display which choice was selected
+
+4. SelectAccount, save choice into account_type
+(C) for CHECKING
+(S) for SAVINGS
+(R) for CREDIT c
+
+4a. display which account was selected
+
+5. 
+a) if users_choice is 1, run AddMoney(account_type) 
+	a1) prompt the user for the money to add to account_type. if account_type is C, add money to checking_acount. if account_type is S, add money to savings_account. if account_type is R, add money to credit_account
+b) if users_choice is 2, run RemoveMoney(account_type)
+	b1) prompt the user for the money to remove from account_type. if account_type is C, remove money from checking_acount. if account_type is S, remove money from savings_account. if account_type is R, remove money from to credit_account
+c) if user_choice is 3, run SelectAccount to get the other account and run AddMoney on((account_type)) and RemoveMoney on ((account_type2)
+	c1) prompt the user for the money to add to account_type. if account_type is C, add money to checking_acount. if account_type is S, add money to savings_account. if account_type is R, add money to credit_account
+	b1) prompt the user for the money to remove from account_type2. if account_type2 is C, remove money from checking_acount. if account_type2 is S, remove money from savings_account. if account_type2 is R, remove money from to credit_account
+
+6. run MakeTransaction and store the result in repeat_yes_or_no.
+a) if repeat_yes_or_no is 1, go to step 2
+b) if repeat_yes_or_no is 0, bid the customer farewell

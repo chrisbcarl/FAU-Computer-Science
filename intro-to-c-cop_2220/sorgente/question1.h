@@ -1,0 +1,2 @@
+//1. Write the function prototype for a function called AverageAge. The function takes 3 arguments of type integer and returns a double, the average of the 3 arguments.
+double AverageAge(int a, int b, int anyname);

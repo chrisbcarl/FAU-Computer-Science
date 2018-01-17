@@ -1,0 +1,39 @@
+1. Write the function definition for a f unction caled increaseprice which has one type double parameter/argument. The function prompts the user for an amount, multiplies, the input by the argument value, and returns the new value.
+
+2. Write a function call for a function called GetGrade which has two type double arguments/parameters. The function returns a character. Declare and initialize the three necessary datavariables and assign values needed to make it eexecutable and to prevent loss of information. Do NOT use literal values in the call.
+
+3. Reading from a file. Write the lines of code that corerspond to the following activities:
+	Declare all variables necessary to perform the following activities
+	Open a file called "numbers.txt" for input (read only)
+	Read a single integer from the file and store it in your declared variable.
+	Subtract 15 from the integer
+	Display the original value and the new value
+	Close the file
+
+4. Write the function prototype/declaration for a function called ReadMe that takes two character arguments and returns nothing.
+
+5. Write user-defined function definition for a function called SalesTax that has no parameter/argument. The function prompts the user for an integer value, reads the value from the keyboard, adds 10% if the input is less than 100 adds 8% if it is 100-499 otherwise it ad 5% to the input value and returns the value.
+
+6. Write a statement that displays the phrase "Buy More" if the value of the integer variable awards is not evenly divisible (with no remainder) by the integer variabel students otherwise displays the phrase "Everyone wins!" (Assume that students is not zero.)
+
+7. Write a function definition for a user-defined function called GotIt. The function takes two integer arguments, answer and guess.
+	Your function should:
+		if answer and guess are the same
+			display "you win" on the monitor
+			return the guess
+		if guess is greater than answer
+			display "too high" on the monitor
+			return the answer
+		if guess is less than answer:
+			display "too low" on the monitor
+			return the answer
+
+	Declare all necessary variables
+
+8. Declare and initialize these two integer variables to any values, wealthy and por, write some code that swaps their values. Declare only one additional variable to assist with the swap.
+
+9. Write a switch statement that tests the value of the variable checkNum and performs the following actions
+	if checkNum is 10, the message "Speed lane" is printed.
+	if checkNum is 11, the message "Pick any lane" is printed.
+	if checkNum is 12, the message "Special assistance required" is printed.
+	for any other value of checkNum, the message "See the manager" is printed

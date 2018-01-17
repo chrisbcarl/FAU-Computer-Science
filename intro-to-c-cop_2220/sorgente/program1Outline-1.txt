@@ -1,0 +1,96 @@
+
+
+//add name , date, and description here
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <ctype.h>
+#define MAXGUESSES 5
+
+
+
+//paste all the function prototypes here
+//with the comments
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <ctype.h>
+#define MAXGUESSES 5
+
+//this function provides instructions to the user on how to play the game
+void LetterGuessGameRules(void);
+
+//this function runs one game.
+//input: character from the file
+//void return type
+//all other functions to Play one round of a game
+//are called from within the PlayOneRound function
+void PlayOneRound(char letterFromFile);
+
+
+//this function prompts the player to make a guess and returns that guess
+//this function is called from inside the PlayOneRound ( ) function described above
+char GetGuess(void);
+
+
+//this function takes two arguments, the guess from the player
+//and the solution letter from the file.
+//The function returns 1 if the guess matches the solution and returns a 0 if they do not match
+//This function also lets the user know if the guess comes alphabetically before or after the solution
+int CompareCharacters(char letterFromFile, char guessFromUser);
+
+
+int main()
+{
+	//declare additional variables
+	//declare FILE pointer
+	int numGames, i = 0;
+
+	char letter;//letter from file
+
+	//display game rules
+	
+	//Ask and get number of games to play
+
+	//connect to the file HINT: use fopen
+	
+	//this for loop will allow the player to play more than one game
+	//without recompiling
+	for (i = 0; i < numGames; i++)
+	{
+		//get a solution letter from file - use fscanf
+		//change the solution to uppercase
+		//print the solution back onto the screen to test
+ 
+		//call the PlayOneRound function and pass it the solution
+		
+	
+	}
+
+	//close file pointer
+	return 0;
+}
+
+//this function runs one game. 
+//input: character from the file
+//void return type
+//all other functions to Play one round of a game 
+//are called from within the PlayOneRound function
+void PlayOneRound(char letterFromFile)
+{
+	int win = 0;
+	int numGuesses = 0;
+	//declare additional variables 
+
+	while (numGuesses < MAXGUESSES && win == 0)
+	{
+		//get a guess from the user  by calling the GetGuess function
+		//change the guess to uppercase
+	    	//win = call the function to compare the guess with the solution
+		numGuesses++;//count the number of guesses so far
+	}
+	//use conditions to let the user know if they won or lost the round of the game
+	
+}

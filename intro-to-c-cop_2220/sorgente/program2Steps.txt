@@ -1,0 +1,71 @@
+Program 2 steps:
+
+****Please do only one step at a time and do not move onto the 
+next step until you have compiled and tested the current step:
+
+Download and read the description: program2 spring 2017.PDF
+
+Download the PROGRAM2.exe file and letters.txt file from Canvas 
+(YOU MAY NEED TO CONNECT TO THE ENGINEERING STUDENT DESKTOPS TO TRY IT)
+
+1. Write the algorithm for program 2
+
+2. create a project and name the source code program2.c
+
+3. Copy and paste the function prototypes 
+
+4. Add the main function
+
+5. Set up the function definitions
+
+6.  COMPILE, BUILD AND TEST - the code should compile and build (at this point it does not do anything interesting)
+
+7. Greet the user 
+(This may be done in the main function, or you may create an additional function for the Greeting)
+
+8.  COMPILE, BUILD AND TEST
+
+9. declare a character in the main function
+
+10. implement the MakeTransaction function and pass it the address of the character just declared
+
+11. COMPILE, BUILD AND TEST - add printf statements to check that the function is working correctly
+
+12. add a do/while or while loop in the main 
+
+13. COMPILE, BUILD AND TEST - be sure that you can continue with a y and stop with n (you may use toupper or tolower functions here)
+
+14. IN THE MAIN FUNCTION: Declare and initialize 3 variables: check (650.00), sav (800.00), cred(-700.00)
+
+15. Implement the Display balance function passing by copythe variables check, sav, and cred
+       HINT: call this function from insdie the do/while loop
+
+16. COMPILE, BUILD AND TEST
+
+17. Declare an integer variable in the main function
+
+18. implement the RunChoices function (1 for DEPOSIT, 2 for WITHDRAWAL) and pass it the address of the integer just declared
+
+19. COMPILE, BUILD AND TEST - add printf statements to check that the function is working correctly
+
+20. Declare a character variable in the main function
+
+21. implement the SelectAccount function (C, S, R) and pass it the address of the character just declared
+
+22. COMPILE, BUILD AND TEST - add printf statements to check that the function is working correctly
+
+23. Here you need to add some conditions in the main function (inside the loop body). There are 2 cases (1 for deposit, 2 for withdrawal)
+each case has 3 selection (C,S,R)
+
+24. BULD RUN AND TEST the conditions (or switch) - add printf statements to test
+
+25. implement the add money function - Be sure to cal the Display balance after each deposit
+
+26. BULD RUN AND TEST
+
+27. implement the remove money function ( the character needs to be passed to this function)
+The savings and checking cannot go below 0
+The credit cannot go below -3000
+
+28. BULD RUN AND TEST
+
