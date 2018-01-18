@@ -1,7 +1,5 @@
-#pragma once
-
-#ifndef MIDTERM_REVIEW_H
-#define MIDTERM_REVIEW_H
+#ifndef SORGENTE_MIDTERM
+#define SORGENTE_MIDTERM
 
 #include "stdio.h"
 
@@ -33,6 +31,8 @@ char LetterGrade(double grade1, double grade2)
 	{
 		return 'U';
 	}
+
+    return '_';
 }
 
 //3. Write the definition for a function called Larger that takes two arguments. The function should return the larger of the two values. You should not assume that the variables will contain different values.
@@ -47,6 +47,7 @@ int Larger(int arg1, int arg2)
 	{
 		return arg2;
 	}
+    else return -1;
 }
 
 //4. Write a set of statements to perform the following steps: When the variable fruit contains the character uppercase P, increase the value in the integer variable papaya by one. When fruit contains the character uppercase G, increase the value in the integer variable guava by one. When fruit contains anything else, increase the value of the integer variable bananas by one.
@@ -144,6 +145,19 @@ double GetD()
 	double num;
 	scanf(" %lf", &num);
 	return num;
+}
+
+void midterm() {
+  printf("PLEASE SEE ACTUAL FILE ./midterm.h AS IT IS NOT A COMPLETE FILE AND CANNOT ACTUALLY RUN\n\n");
+
+
+}
+
+
+// stub, this defniition shouldn't be here but it prevents compilation.
+double AverageAge(int a, int b, int anyname)
+{
+  return 0.0;
 }
 
 #endif // !MIDTERM_REVIEW_H

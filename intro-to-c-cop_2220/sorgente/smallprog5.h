@@ -1,7 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS
+
+#ifndef SORGENTE_SMALLPROG5
+#define SORGENTE_SMALLPROG5
+
 #include<stdio.h>
 //Jake Cardo 03/27/16
-int main()
+int smallprog5()
 {
 	// vars
 	int bob;
@@ -60,3 +64,5 @@ int main()
 
 	return 0;
 }
+
+#endif

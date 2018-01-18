@@ -1,18 +1,15 @@
-//
-//  main.c
-//  FAU_COP2200_2016R_sorgente
-//
-//  Created by Christopher Carl on 10/19/16.
-//  Copyright © 2016 Christopher Carl. All rights reserved.
-//
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #include <stdio.h>
+#include "sorgente.h"
 
-#include "lab3.h"
 
-int main(int argc, const char * argv[]) {
-    
-    lab3();
-    
-    return 0;
+int main(unsigned int args, char ** argv) {
+
+  for (unsigned int i = 0; i < args; i++) {
+    printf("lol");
+  }
+  
 }

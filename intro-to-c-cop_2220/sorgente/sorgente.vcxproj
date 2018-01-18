@@ -77,6 +77,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -115,55 +118,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\GDrive\dev\workspace\cli\C\IntroC-2\IntroC\main (1).c" />
-    <ClCompile Include="2017s-main.c" />
-    <ClCompile Include="amazon.c" />
-    <ClCompile Include="anything.c" />
-    <ClCompile Include="array.c" />
-    <ClCompile Include="array2.c" />
-    <ClCompile Include="game.c" />
-    <ClCompile Include="hangman.c" />
-    <ClCompile Include="main (1).c" />
-    <ClCompile Include="main (2).c" />
-    <ClCompile Include="main(2).c" />
+    <ClCompile Include="amazon.h" />
+    <ClCompile Include="guessing.h" />
+    <ClCompile Include="hangman.h" />
+    <ClCompile Include="atm.h" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="pointers.c" />
-    <ClCompile Include="pointer_example.c" />
-    <ClCompile Include="prog4.c" />
-    <ClCompile Include="recursion.cpp" />
-    <ClCompile Include="smallprog4.c" />
-    <ClCompile Include="smallProg5.c" />
-    <ClCompile Include="woodworth.c" />
+    <ClCompile Include="prog4.h" />
+    <ClCompile Include="smallprog5.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="2017s-control.h" />
-    <ClInclude Include="2017s-loops.h" />
-    <ClInclude Include="2017s-midterm_review.h" />
+    <ClInclude Include="khash.h" />
+    <ClInclude Include="midterm.h" />
     <ClInclude Include="lab3.h" />
-    <ClInclude Include="lab9.h" />
-    <ClInclude Include="noujumian.h" />
-    <ClInclude Include="question1.h" />
-    <ClInclude Include="question2.h" />
-    <ClInclude Include="question3.h" />
-    <ClInclude Include="question4.h" />
-    <ClInclude Include="question5.h" />
-    <ClInclude Include="question6.h" />
-    <ClInclude Include="question7.h" />
     <ClInclude Include="smallprog4.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="check.txt" />
-    <Text Include="checkedycheck.txt" />
-    <Text Include="doubleInput.txt" />
-    <Text Include="doubleOutput.txt" />
-    <Text Include="hangman.txt" />
-    <Text Include="lettersin.txt.txt" />
-    <Text Include="program1Outline-1.txt" />
-    <Text Include="program2Steps.txt" />
-    <Text Include="program2_algorithm.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
+    <ClInclude Include="sorgente.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

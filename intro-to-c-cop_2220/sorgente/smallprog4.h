@@ -2,12 +2,12 @@
 //  smallprog4.h
 //  IntroC
 //
-//  Created by Jacob Cardo on 3/14/17.
-//  Copyright © 2017 Jacob Cardo. All rights reserved.
+//  Created by Chris Carl on 3/14/17.
+//  Copyright © 2017 Chris Carl. All rights reserved.
 //
 
-#ifndef smallprog4_h
-#define smallprog4_h
+#ifndef SORGENTE_SMALLPROG4
+#define SORGENTE_SMALLPROG4
 
 /*
  PART 1:
@@ -71,5 +71,12 @@ void CalculateBoth(int number1, int number2, int* product, int* remainder)
 //if num2 is 0 do not calculate the remainder and the value at remPtr will be 0 void CalculateBoth(int num1, int num2, int*prodPtr, int *remPtr); Call the CalculateBoth function from main. Print the results (value at remPtr and value at prodPtr) inside the CalculateBoth function
 //Also, print the results again in the main function after the function has been called
 
-
+void smallprog4() {
+  int number1 = 1;
+  int number2 = 2;
+  int product = 0;
+  int remainder = 0;
+  part1();
+  CalculateBoth(number1, number2, &product, &remainder);
+}
 #endif /* smallprog4_h */

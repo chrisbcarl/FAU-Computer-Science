@@ -6,8 +6,8 @@
 //  Copyright © 2016 Christopher Carl. All rights reserved.
 //
 
-#ifndef LAB3
-#define LAB3
+#ifndef SORGENTE_LAB3
+#define SORGENTE_LAB3
 
 #include <stdio.h>
 

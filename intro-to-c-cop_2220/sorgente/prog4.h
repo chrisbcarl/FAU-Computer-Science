@@ -1,8 +1,11 @@
+#ifndef SORGENTE_PROG4
+#define SORGENTE_PROG4
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <string.h>
-#define SIZE 100
+#define SIZE2 100
 
 typedef struct lol {
 	int a;
@@ -15,9 +18,9 @@ typedef struct {
 
 typedef struct Song
 {
-	char title[SIZE];
-	char artist[SIZE];
-	char album[SIZE];
+	char title[SIZE2];
+	char artist[SIZE2];
+	char album[SIZE2];
 	int year;
 	double cost;
 
@@ -34,9 +37,8 @@ void input(Song * song);
 
 
 
-int main() {
-	kk k;
-	Song list[SIZE];
+int prog4() {
+	Song list[SIZE2];
 	Song song1 = {"", "", "", 0, 0};
 
 	
@@ -140,3 +142,5 @@ void input(Song * song)
 	printf("song.cost ");	
 	scanf(" %lf", &song->cost);
 }
+
+#endif

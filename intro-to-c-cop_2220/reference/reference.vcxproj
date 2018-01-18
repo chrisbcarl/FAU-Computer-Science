@@ -77,6 +77,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -115,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="array.c" />
     <ClCompile Include="datatypes.cpp" />
     <ClCompile Include="main.c" />
     <ClCompile Include="main.cpp" />
@@ -123,9 +127,14 @@
     <ClCompile Include="midterm.c" />
     <ClCompile Include="midterm_optimized.c" />
     <ClCompile Include="operations.cpp" />
+    <ClCompile Include="pointers.c" />
+    <ClCompile Include="pointer_example.c" />
+    <ClCompile Include="recursion.cpp" />
     <ClCompile Include="sample.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="2017s-control.h" />
+    <ClInclude Include="2017s-loops.h" />
     <ClInclude Include="adv_c_structs.h" />
     <ClInclude Include="argsv.h" />
     <ClInclude Include="c_structs.h" />
@@ -133,6 +142,7 @@
     <ClInclude Include="files_arrays.h" />
     <ClInclude Include="midterm (1).h" />
     <ClInclude Include="midterm.h" />
+    <ClInclude Include="noujumian.h" />
     <ClInclude Include="operations.hpp" />
   </ItemGroup>
   <ItemGroup>
