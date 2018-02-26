@@ -1,0 +1,6 @@
+/classifiers/*
+/data/*
+/networks/*
+
+testFeatures.mat
+trainingFeatures.mat

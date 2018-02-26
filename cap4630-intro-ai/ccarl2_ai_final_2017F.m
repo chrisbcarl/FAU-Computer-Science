@@ -1,0 +1,415 @@
+%% CAP 4630 - Intro to AI - FAU - Dr. Marques - Fall 2017
+%% 
+% Chris Carl
+% Z23146703
+% ccarl2@fau.edu
+%% Final Project - Starter code (2-class classifier: cats vs. dogs)
+
+% Inspired by the example "Deep Learning for Pet Classification" 
+% (Copyright 2016 The MathWorks, Inc.)
+
+clf; %clear figure
+cla; %clear axis
+close all; %close all windows
+clear; %clear workspace of variables
+clc;
+fprintf('Chris Carl\nZ23146703\nccarl2@fau.edu\nDr. Oge Maques\nFAU CAP4630 2017F - Final\n');
+fprintf('\n---Setup provided in Example:---\n');
+%% Part 1: Download, load and inspect Pre-trained Convolutional Neural Network (CNN)
+% You will need to download a pre-trained CNN model for this example.
+% There are several pre-trained networks that have gained popularity.
+% Most of these have been trained on the ImageNet dataset, which has 1000
+% object categories and 1.2 million training images[1]. "AlexNet" is one
+% such model and can be downloaded from MatConvNet[2,3]. 
+
+%% 1.1: Location of pre-trained "AlexNet"
+cnnURL = 'http://www.vlfeat.org/matconvnet/models/beta16/imagenet-caffe-alex.mat';
+% Specify folder for storing CNN model 
+cnnFolder = './networks';
+cnnMatFile = 'imagenet-caffe-alex.mat'; 
+cnnFullMatFile = fullfile(cnnFolder, cnnMatFile);
+
+% Check that the code is only downloaded once
+if ~exist(cnnFullMatFile, 'file')
+    fprintf('Downloading pre-trained CNN model...\n');     
+    websave(cnnFullMatFile, cnnURL);
+end
+
+%% 1.2: Load Pre-trained CNN
+% The CNN model is saved in MatConvNet's format [3]. Load the MatConvNet
+% network data into |convnet|, a |SeriesNetwork| object from Neural Network
+% Toolbox(TM), using the helper function |helperImportMatConvNet| in the 
+% Computer Vision System Toolbox (TM). A SeriesNetwork object can be used
+% to inspect the network architecture, classify new data, and extract
+% network activations from specific layers.
+
+% Load MatConvNet network into a SeriesNetwork
+fprintf('Loading pre-trained CNN model imagenet-caffe-alex into SeriesNetwork...\n');
+convnet = helperImportMatConvNet(cnnFullMatFile);
+
+%% 1.3: Inspect pre-trained CNN
+% |convnet.Layers| defines the architecture of the CNN 
+% Inspect the name, size, and properties of the CNN's layers
+%convnet.Layers
+
+% The intermediate layers make up the bulk of the CNN. These are a series
+% of convolutional layers, interspersed with rectified linear units (ReLU)
+% and max-pooling layers [2]. Following the these layers are 3
+% fully-connected layers.
+%
+% The final layer is the classification layer and its properties depend on
+% the classification task. In this example, the CNN model that was loaded
+% was trained to solve a 1000-way classification problem. Thus the
+% classification layer has 1000 classes from the ImageNet dataset. 
+
+% Inspect the last layer
+%convnet.Layers(end)
+
+% Number of class names for ImageNet classification task
+%numel(convnet.Layers(end).ClassNames)
+
+%%
+% Note that the CNN model is not going to be used for the original
+% classification task. It is going to be re-purposed to solve a different
+% classification task on the pets dataset.
+
+%% Part 2: Set up image data
+%% 2.1: Load simplified dataset and build image store
+fprintf('Loading images from ./data/PetImages...\n');
+dataFolder = './data/PetImages';
+categories = {'cat', 'dog'};
+imds = imageDatastore(fullfile(dataFolder, categories), 'LabelSource', 'foldernames');
+tbl = countEachLabel(imds);
+
+% Use the smallest overlap set
+% (useful when the two classes have different number of elements)
+minSetCount = min(tbl{:,2});
+
+% Use splitEachLabel method to trim the set.
+imds = splitEachLabel(imds, minSetCount, 'randomize');
+
+% Notice that each set now has exactly the same number of images.
+%countEachLabel(imds)
+
+%% 2.2: Pre-process Images For CNN
+% |convnet| can only process RGB images that are 227-by-227.
+% To avoid re-saving all the images to this format, setup the |imds|
+% read function, |imds.ReadFcn|, to pre-process images on-the-fly.
+% The |imds.ReadFcn| is called every time an image is read from the
+% |ImageDatastore|.
+%
+% Set the ImageDatastore ReadFcn
+imds.ReadFcn = @(filename)readAndPreprocessImage(filename);
+
+%% 2.3: Divide data into training and testing sets
+fprintf('Splitting data into training, testing, and cv sets...\n');
+[trainingSet, testSet, cvSet] = splitEachLabel(imds, 0.6, 0.2, 'randomize');
+
+%% Part 3: Feature Extraction 
+% Extract training features using pretrained CNN
+
+% Each layer of a CNN produces a response, or activation, to an input
+% image. However, there are only a few layers within a CNN that are
+% suitable for image feature extraction. The layers at the beginning of the
+% network capture basic image features, such as edges and blobs. To see
+% this, visualize the network filter weights from the first convolutional
+% layer. This can help build up an intuition as to why the features
+% extracted from CNNs work so well for image recognition tasks. Note that
+% visualizing deeper layer weights is beyond the scope of this example. You
+% can read more about that in the work of Zeiler and Fergus [4].
+
+%% 3.1: Inspect the network weights for convolutional layers
+% Get the network weights for the second convolutional layer
+w1 = convnet.Layers(2).Weights;
+
+% Scale and resize the weights for visualization
+w1 = mat2gray(w1);
+w1 = imresize(w1,5); 
+
+% Display a montage of network weights. 
+figure, montage(w1), title(sprintf('Weights for layer: %d', 2));    
+
+% Notice how the first layer of the network has learned filters for
+% capturing blob and edge features. These "primitive" features are then
+% processed by deeper network layers, which combine the early features to
+% form higher level image features. These higher level features are better
+% suited for recognition tasks because they combine all the primitive
+% features into a richer image representation [5].
+
+
+
+%% 3.2: Use features from one of the deeper layers
+% You can easily extract features from one of the deeper layers using the
+% |activations| method. Selecting which of the deep layers to choose is a
+% design choice, but typically starting with the layer right before the
+% classification layer is a good place to start. In |convnet|, the this
+% layer is named 'fc7'. Let's extract training features using that layer.
+
+featureLayer = 'fc7';
+
+trainingFeaturesFolder = './';
+trainingFeaturesFile = 'trainingFeatures.mat'; 
+trainingFeaturesFullMatFile = fullfile(trainingFeaturesFolder, trainingFeaturesFile);
+
+% Check that the code is only downloaded once
+if ~exist(trainingFeaturesFullMatFile, 'file')
+    fprintf('Building training features... This will take a while...\n');     
+    trainingFeatures = activations(convnet, trainingSet, featureLayer, ...
+      'MiniBatchSize', 32, 'OutputAs', 'columns');
+    save(trainingFeaturesFullMatFile, 'trainingFeatures');
+else
+    fprintf('Loading trainingFeatures.mat...\n');
+    load trainingFeatures.mat
+end
+
+% Note that the activations are computed on the GPU and the 'MiniBatchSize'
+% is set 32 to ensure that the CNN and image data fit into GPU memory.
+% You may need to lower the 'MiniBatchSize' if your GPU runs out of memory.
+%
+% Also, the activations output is arranged as columns. This helps speed-up
+% the multiclass linear SVM training that follows.
+
+%% 3.3: Extract features from images in the test set
+testFeaturesFolder = './';
+testFeaturesFile = 'testFeatures.mat'; 
+testFeaturesFullMatFile = fullfile(testFeaturesFolder, testFeaturesFile);
+
+% Check that the code is only downloaded once
+if ~exist(testFeaturesFullMatFile, 'file')
+    fprintf('Extracting features... This will take a while...\n');     
+    % Extract test features using the CNN
+    testFeatures = activations(convnet, testSet, featureLayer, 'MiniBatchSize',32);
+    % Save features for future use
+    save(testFeaturesFullMatFile, 'testFeatures');
+else
+    fprintf('Loading testFeatures.mat...\n');
+    load testFeatures.mat
+end
+
+
+%% Part 4: Train a bunch of classifiers
+fprintf('\n---Unique Code Section---\n');
+
+% Get training labels from the trainingSet
+trainingLabels = trainingSet.Labels;
+folder = './classifiers';
+fprintf('Creating all classifiers...\n');
+
+% linear classifier
+filename = 'linear.mat'; 
+ff = fullfile(folder, filename);
+if ~exist(ff, 'file')
+    fprintf('\tCreating linear classifier...\n');
+    tl = templateLinear();
+    linear = fitcecoc(trainingFeatures, trainingLabels, ...
+        'Learners', tl, 'Coding', 'onevsall', 'ObservationsIn', 'columns');
+    save(ff, 'linear');
+else
+    fprintf('\tLoading linear classifier...\n');
+    load classifiers/linear.mat;
+end
+
+% tree classifier
+filename = 'tree.mat';
+ff = fullfile(folder, filename);
+if ~exist(ff, 'file')
+    fprintf('\tCreating tree classifier...\n');
+    tt = templateTree('Surrogate','on');
+    tree = fitcecoc(trainingFeatures, trainingLabels, ...
+        'Learners', tt, 'Coding', 'onevsall', 'ObservationsIn', 'columns');
+    save(ff, 'tree');
+else
+    fprintf('\tLoading tree classifier...\n');
+    load classifiers/tree.mat;
+end
+
+% linear svm classifier
+filename = 'linear_svm.mat'; 
+ff = fullfile(folder, filename);
+if ~exist(ff, 'file')
+    fprintf('\tCreating linear SVM classifier...\n');
+    tlsvm = templateSVM('KernelFunction', 'linear');
+    lsvm = fitcecoc(trainingFeatures, trainingLabels, ...
+        'Learners', tlsvm, 'Coding', 'onevsall', 'ObservationsIn', 'columns');
+    save(ff, 'lsvm');
+else
+    fprintf('\tLoading linear SVM classifier...\n');
+    load classifiers/linear_svm.mat;
+end
+
+% polynomial SVM classifier
+filename = 'polynomial_svm.mat';
+ff = fullfile(folder, filename);
+if ~exist(ff, 'file')
+    fprintf('\tCreating polynomial SVM classifier...\n');
+    tpsvm = templateSVM('KernelFunction', 'polynomial');
+    psvm = fitcecoc(trainingFeatures, trainingLabels, ...
+        'Learners', tpsvm, 'Coding', 'onevsall', 'ObservationsIn', 'columns');
+    save(ff, 'psvm');
+else
+    fprintf('\tLoading polynomial SVM classifier...\n');
+    load classifiers/polynomial_svm.mat;
+end
+
+% naive bayes classifier
+filename = 'naive_bayes.mat'; 
+ff = fullfile(folder, filename);
+if ~exist(ff, 'file')
+    fprintf('\tCreating naive bayes classifier...\n');
+    tnb = templateNaiveBayes();
+    nb = fitcecoc(trainingFeatures, trainingLabels, ...
+        'Learners', tnb, 'Coding', 'onevsall', 'ObservationsIn', 'columns');
+    save(ff, 'nb');
+else
+    fprintf('\tLoading naive bayes classifier...\n');
+    load classifiers/naive_bayes.mat;
+end
+
+% k-nearest-neighbors  classifier
+filename = 'knn.mat';
+ff = fullfile(folder, filename);
+if ~exist(ff, 'file')
+    fprintf('\tCreating k-nearest-neighbors classifier...\n');
+    tknn = templateKNN('NumNeighbors',5,'Standardize',1);
+    knn = fitcecoc(trainingFeatures, trainingLabels, ...
+        'Learners', tknn, 'Coding', 'onevsall', 'ObservationsIn', 'columns');
+    save(ff, 'knn');
+else
+    fprintf('\tLoading tree classifier...\n');
+    load classifiers/knn.mat;
+end
+
+
+classifiers = {linear, tree, lsvm, psvm, nb, knn};
+names = {'linear', 'tree', 'linear SVM', 'polynomial SVM', 'naive bayes', 'k-nearest-neighbors'};
+files = {'./doge.jpg', './grumpy.jpg', './math.jpg', './business.jpg', ...
+    './police.jpg', './nyan.jpg'};
+results = {'dog', 'cat', 'dog', 'cat', 'dog', 'cat'};
+
+
+%% Part 5: Define a function to evaluate classifiers
+% definition located at end of file
+
+%% Part 5.1: Evaluate classifiers
+fprintf('Evaluating all classifiers...\n');
+evaluate(testSet, testFeatures, convnet, featureLayer, ...
+    classifiers, names, files, results);
+
+%% Part 6: Reveal answers
+answers(files, results);
+
+%% Part 5: cont...
+function e = evaluate(testSet, testFeatures, convnet, featureLayer, ...
+    classifiers, names, files, results)
+
+    n_classifiers = length(classifiers);
+    n_files = length(files);
+
+	confusion_results = zeros(4, n_classifiers);
+	%class_loss = cell(1,n_classifiers);
+    predictions = cell(n_files, n_classifiers);
+    accuracy = zeros(n_files, n_classifiers);
+    cpu_times = zeros(n_classifiers, 1);
+    
+    for c = 1:n_classifiers
+        %% 5.2: Test classifier's prediction accuracy and produce confusion matrix
+        % Pass CNN image features to trained classifier
+        fprintf('\tEvaluating %s ...\n', names{c});
+        classifier = classifiers{c};
+        t = cputime;
+        predictedLabels = predict(classifier, testFeatures);
+
+        % Get the known labels
+        testLabels = testSet.Labels;
+
+        % Tabulate the results using a confusion matrix.
+        confusion = confusionmat(testLabels, predictedLabels);
+        confusion_rates = bsxfun(@rdivide,confusion,sum(confusion,2));
+        
+        confusion_results(1, c) = confusion_rates(1,1);    % true positive
+        confusion_results(2, c) = confusion_rates(2,2);    % true negative
+        confusion_results(3, c) = confusion_rates(1,2);    % false positive
+        confusion_results(4, c) = confusion_rates(2,1);    % false negative
+        
+        % cross-validation
+        fprintf('\t\tRunning cross-validation on %s ...\n', names{c});
+        %cv = crossval(classifier);
+        %class_loss{c} = kfoldLoss(cv);
+        
+        % image analysis
+        fprintf('\t\tRunning image analysis on %s ...\n', names{c});
+        for f = 1:n_files
+            newImage = char(files(f)); % any cat or dog image should do!
+            img = readAndPreprocessImage(newImage);
+            imageFeatures = activations(convnet, img, featureLayer);
+            label = predict(classifier, imageFeatures);
+            predictions{f,c} = label;
+            accuracy(f,c) = predictions{f,c} == results{f};
+            
+        end
+        
+        e = cputime-t;
+        cpu_times(c) = e;
+    end
+    
+    % plotting the length of time it took to compute the image label prediction
+    figure;
+    b = bar(categorical(names),cpu_times);
+    colormap summer;
+    grid on;
+    legend(b, {'ms'});
+    title(char('Elapsed CPU times per classifier'));
+    
+    % plotting confusion matrix information
+    figure;
+    b = bar(categorical({'true positive','true negative','false positive','false negative'}), ...
+            confusion_results);
+    colormap winter;
+    grid on;
+    legend(b, names);
+    title(char('Classifier per confusion matrix metric per classifier'));
+
+    
+    % plotting image predictions per image per classifier    
+    figure;
+    b = bar(categorical(files),accuracy);
+    colormap spring;
+    grid on;
+    legend(b, names);
+    title(char('Predictions per image per classifier'));
+
+    %figure, bar(names,class_loss), title(char('Classification Loss per Classifier')); 
+    
+    e = 0;
+end
+
+
+function a = answers(files, results)
+    n_files = length(files);
+    
+    for n = 1:n_files
+        img = readAndPreprocessImage(char(files{n}));
+        figure, imshow(img), title(char(results{n}));
+    end
+    
+    a = 0;
+end
+
+%% References
+% [1] Deng, Jia, et al. "Imagenet: A large-scale hierarchical image
+% database." Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE
+% Conference on. IEEE, 2009.
+%
+% [2] Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E. Hinton. "Imagenet
+% classification with deep convolutional neural networks." Advances in
+% neural information processing systems. 2012.
+%
+% [3] Vedaldi, Andrea, and Karel Lenc. "MatConvNet-convolutional neural
+% networks for MATLAB." arXiv preprint arXiv:1412.4564 (2014).
+%
+% [4] Zeiler, Matthew D., and Rob Fergus. "Visualizing and understanding
+% convolutional networks." Computer Vision-ECCV 2014. Springer
+% International Publishing, 2014. 818-833.
+%
+% [5] Donahue, Jeff, et al. "Decaf: A deep convolutional activation feature
+% for generic visual recognition." arXiv preprint arXiv:1310.1531 (2013).
