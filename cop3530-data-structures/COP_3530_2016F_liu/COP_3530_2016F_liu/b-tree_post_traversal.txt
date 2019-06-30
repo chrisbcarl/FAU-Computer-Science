@@ -1,0 +1,33 @@
+b-tree post traversal:
+
+a.left -  b.left -   d.left -   g.left  = 0
+                                g.right = 0
+                                g.print
+                                g.root  - d
+                     d.right  - h.left  = 0
+                                h.right = 0
+                                h.print
+                                h.root  - d
+                     d.print
+                     d.root   - b
+           b.right - e.left   = 0
+                     e.right  - i.left  = 0
+                                i.right = 0
+                                i.print
+                                i.root  = e
+                     e.print
+                     e.root   - b
+           b.print
+           b.root -  a
+a.right -  c.left -  f.left   = 0
+                     f.right - j.left  = 0
+                               j.right = 0
+                               j.print
+                               j.root -  f
+                     f.print
+                     f.root -  c
+           c.right = 0
+           c.print
+           c.root -  a
+a.print
+a.root =   0

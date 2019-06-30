@@ -1,0 +1,4 @@
+host name: pluto.cse.fau.edu
+port: 22
+SSH
+check: only on clean exit
